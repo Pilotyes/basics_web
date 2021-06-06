@@ -1,0 +1,12 @@
+<h1>All Posts</h1>
+{{range .Posts}}
+    <ul>
+        <li class="done">
+            <div>Post ID: {{.ID}}</div>
+            <div>Title: {{.Title}}</div>
+            <div>Text: {{.Text}}</div>
+            <div>Author: {{.Author}}</div>
+        </li>
+    </ul>
+    </hr>
+{{end}}
