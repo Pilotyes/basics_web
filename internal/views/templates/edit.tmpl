@@ -1,0 +1,8 @@
+<h1>Edit Post</h1>
+<form action="/edit/{{.ID}}" method="POST">
+    <input type="text" name="title" id="title" placeholder="Title" value="{{.Title}}"/>
+    <input type="text" name="text" id="text" placeholder="Text" value="{{.Text}}"/>
+    <input type="text" name="author" id="author" placeholder="Author" value="{{.Author}}"/>
+    <input type="hidden" name="id" id="id" value="{{.ID}}"/>
+    <button type=submit>Create post</button>
+</form>
