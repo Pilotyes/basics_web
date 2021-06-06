@@ -9,22 +9,30 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/sirupsen/logrus"
 )
 
 //PostController ...
 type PostController struct {
+	logger  *logrus.Entry
 	storage storage.Storage
 }
 
 //New ...
-func New(storage storage.Storage) *PostController {
+func New(logger *logrus.Logger, storage storage.Storage) *PostController {
+	l := logger.WithFields(logrus.Fields{
+		"controller": "PostController",
+	})
+
 	return &PostController{
+		logger:  l,
 		storage: storage,
 	}
 }
 
 //CreatePost ...
 func (pc *PostController) CreatePost(w http.ResponseWriter, r *http.Request) {
+	pc.logger.Debugln("Create post method", r.Method)
 	switch r.Method {
 	case http.MethodGet:
 		renderer, err := views.New()
@@ -54,6 +62,7 @@ func (pc *PostController) CreatePost(w http.ResponseWriter, r *http.Request) {
 
 //EditPost ...
 func (pc *PostController) EditPost(w http.ResponseWriter, r *http.Request) {
+	pc.logger.Debugln("Edit post method", r.Method)
 	switch r.Method {
 	case http.MethodGet:
 		id := mux.Vars(r)["id"]
@@ -99,6 +108,7 @@ func (pc *PostController) EditPost(w http.ResponseWriter, r *http.Request) {
 
 //GetPost ...
 func (pc *PostController) GetPost(w http.ResponseWriter, r *http.Request) {
+	pc.logger.Debugln("Get post")
 	id := mux.Vars(r)["id"]
 	intID, _ := strconv.ParseInt(id, 10, 64)
 
@@ -119,6 +129,7 @@ func (pc *PostController) GetPost(w http.ResponseWriter, r *http.Request) {
 
 //GetPosts ...
 func (pc *PostController) GetPosts(w http.ResponseWriter, r *http.Request) {
+	pc.logger.Debugln("Get posts")
 	posts := pc.storage.Posts().GetPosts()
 
 	renderer, err := views.New()

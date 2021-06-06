@@ -1,0 +1,5 @@
+[server_config]
+bind_addr = ":8080"
+
+[log_config]
+log_level = "debug"
